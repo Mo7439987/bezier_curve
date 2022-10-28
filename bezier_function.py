@@ -1,8 +1,7 @@
-from math import factorial
 import cv2
 import numpy as np
 from random import random, randint
-from math import sin, cos, sqrt
+from math import sin, cos, sqrt, factorial
 from colorsys import hsv_to_rgb
 
 
@@ -73,9 +72,9 @@ def click_event(event, x, y, flags, params):
         print(f'click {(x, y, len(points)), iterations}')
         #print(id(points))
         points.append((x, y))
-        shape = (1024, 1024, 3)
+        shape = (1080, 1920, 3)
         img = np.zeros(shape, dtype=np.uint8)
-        draw_bezier(img, points, step=(2**-3), radius=8, max_points=32)
+        draw_bezier(img, points, step=(2**-2), radius=8, max_points=32)
 
         cv2.imshow('aj', img)
         #cv2.setMouseCallback('aj', click_event)
@@ -85,10 +84,7 @@ def click_event(event, x, y, flags, params):
 
 
 if __name__ == '__main__':
-    l = [(random() * 1024, random() * 1024) for _ in range(1024)]
-    for _ in range(1023):
-        l.pop(0)
-    shape = (1024, 1024, 3)
+    shape = (1080, 1920, 3)
     img = np.zeros(shape, dtype=np.uint8)
     cv2.imshow('aj', img)
     cv2.setMouseCallback('aj', click_event)
