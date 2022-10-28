@@ -1,0 +1,78 @@
+from math import factorial
+import cv2
+import numpy as np
+from random import random, randint
+from math import sin, cos
+from colorsys import hsv_to_rgb
+
+
+def float_to_int(c):
+    return tuple(int(a * 255) for a in c)
+
+
+def vector_scale(v, n):
+    return tuple(a * n for a in v)
+
+
+def vector_add(v0, v1):
+    return tuple((v0[i] + v1[i]) for i in range(min(len(v0), len(v1))))
+
+
+def binomial(n, k):
+    f = factorial
+    return f(n) / (f(k) * f(n - k))
+
+
+def bezier(t, _points):
+    n = len(_points)
+    if n <= 0 or t > 1 or t < 0:
+        return tuple()
+
+    result = vector_scale(_points[0], 0)
+    for i in range(n):
+        p = _points[i]
+        v = vector_scale(p, binomial(n - 1, i) *
+                         (t ** i) *
+                         ((1 - t) ** ((n - 1) - i))
+                         )
+        result = vector_add(result, v)
+
+    return result
+
+
+def draw_bezier(_img, _points, step=(2 ** -8), radius=1, color=(255, 255, 255)):
+    t = 0
+    h, w, c = _img.shape
+
+    while t <= 1:
+        v = bezier(t, _points)
+        if len(v) >= 2:
+            x = int(v[0])
+            y = int(v[1])
+            c = float_to_int(hsv_to_rgb(t, 0.8, 0.8))
+            cv2.circle(_img, (x, y), radius, c, thickness=-1)
+        t += step
+
+
+points = []
+
+
+def click_event(event, x, y, flags, params):
+    if event == cv2.EVENT_LBUTTONDOWN:
+        print(f'click {(x, y)}')
+        points.append((x, y))
+        shape = (1024, 1024, 3)
+        img = np.zeros(shape, dtype=np.uint8)
+        draw_bezier(img, points, step=(2**-12), radius=8)
+
+        cv2.imshow('aj', img)
+        cv2.setMouseCallback('aj', click_event)
+        cv2.waitKey(0)
+
+
+if __name__ == '__main__':
+    shape = (1024, 1024, 3)
+    img = np.zeros(shape, dtype=np.uint8)
+    cv2.imshow('aj', img)
+    cv2.setMouseCallback('aj', click_event)
+    cv2.waitKey(0)
