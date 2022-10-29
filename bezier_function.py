@@ -48,7 +48,6 @@ def draw_bezier(_img, _points: list, step=(2 ** -8), radius_start=1, radius_end=
     n = len(_points)
     while n > max_points >= 3:
         n = len(_points)
-        #print(n, end='')
         _points.pop(0)
 
     while t <= 1:
@@ -58,7 +57,6 @@ def draw_bezier(_img, _points: list, step=(2 ** -8), radius_start=1, radius_end=
             y = int(v[1])
             c = float_to_int(hsv_to_rgb((t + 0.25) % 1, 0.8, 0.8)) + (128,)
             cv2.circle(_img, (x, y), int(radius_start * log(1 + t)), c, thickness=-1)
-            #_img[y, x] = c
         t += (step / sqrt(n))
 
 
@@ -69,7 +67,6 @@ shape = (512, 512, 4)
 
 def click_event(event, x, y, flags, params):
     if event == cv2.EVENT_LBUTTONDOWN or True:
-        #print(id(points))
         points.append((x, y))
         img = np.zeros(shape, dtype=np.uint8)
         draw_bezier(img, points, step=(2**-5), radius_start=8, max_points=16)
