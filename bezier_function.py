@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from random import random, randint
-from math import sin, cos, sqrt, factorial
+from math import sin, cos, sqrt, log, factorial
 from colorsys import hsv_to_rgb
 
 
@@ -18,8 +18,10 @@ def vector_add(v0, v1):
 
 
 def binomial(n, k):
-    f = factorial
-    return f(n) / (f(k) * f(n - k))
+    p = 1
+    for i in range(k):
+        p *= (n - i) / (i + 1)
+    return p
 
 
 def bezier(t, _points):
@@ -39,7 +41,7 @@ def bezier(t, _points):
     return result
 
 
-def draw_bezier(_img, _points: list, step=(2 ** -8), radius=1, color=(255, 255, 255), max_points=16):
+def draw_bezier(_img, _points: list, step=(2 ** -8), radius_start=1, radius_end=1, color=(255, 255, 255), max_points=16):
     t = 0
     h, w, c = _img.shape
 
@@ -54,37 +56,30 @@ def draw_bezier(_img, _points: list, step=(2 ** -8), radius=1, color=(255, 255, 
         if len(v) >= 2:
             x = int(v[0])
             y = int(v[1])
-            c = float_to_int(hsv_to_rgb(t, 0.8, 0.8))
-            cv2.circle(_img, (x, y), radius, c, thickness=-1)
+            c = float_to_int(hsv_to_rgb((t + 0.25) % 1, 0.8, 0.8)) + (128,)
+            cv2.circle(_img, (x, y), int(radius_start * log(1 + t)), c, thickness=-1)
             #_img[y, x] = c
         t += (step / sqrt(n))
 
 
 points = []
 print(id(points))
-iterations = 0
+shape = (512, 512, 4)
 
 
 def click_event(event, x, y, flags, params):
     if event == cv2.EVENT_LBUTTONDOWN or True:
-        global iterations
-        iterations += 1
-        print(f'click {(x, y, len(points)), iterations}')
         #print(id(points))
         points.append((x, y))
-        shape = (1080, 1920, 3)
         img = np.zeros(shape, dtype=np.uint8)
-        draw_bezier(img, points, step=(2**-2), radius=8, max_points=32)
+        draw_bezier(img, points, step=(2**-5), radius_start=8, max_points=16)
 
         cv2.imshow('aj', img)
-        #cv2.setMouseCallback('aj', click_event)
-        #cv2.waitKey(0)
     else:
         print(event)
 
 
 if __name__ == '__main__':
-    shape = (1080, 1920, 3)
     img = np.zeros(shape, dtype=np.uint8)
     cv2.imshow('aj', img)
     cv2.setMouseCallback('aj', click_event)
