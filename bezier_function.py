@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from random import random, randint
+from time import time
 from math import sin, cos, sqrt, log, factorial
 from colorsys import hsv_to_rgb
 
@@ -44,6 +45,7 @@ def bezier(t, _points):
 def draw_bezier(_img, _points: list, step=(2 ** -8), radius_start=1, radius_end=1, color=(255, 255, 255), max_points=16):
     t = 0
     h, w, c = _img.shape
+    area = h * w
 
     n = len(_points)
     while n > max_points >= 3:
@@ -55,25 +57,44 @@ def draw_bezier(_img, _points: list, step=(2 ** -8), radius_start=1, radius_end=
         if len(v) >= 2:
             x = int(v[0])
             y = int(v[1])
+
             c = float_to_int(hsv_to_rgb((t + 0.25) % 1, 0.8, 0.8)) + (128,)
-            cv2.circle(_img, (x, y), int(radius_start * log(1 + t)), c, thickness=-1)
+            #c = float_to_int(hsv_to_rgb((x + y * w) / area, 0.8, 0.8)) + (128,)
+            r = int(radius_start * log(1 + t) + radius_end * log(2 - t))
+            cv2.circle(_img, (x, y), r, c, thickness=-1)
         t += (step / sqrt(n))
 
 
 points = []
-print(id(points))
-shape = (512, 512, 4)
+shape = (1024, 1024, 4)
+tick = time()
+do_tick = True
+tick_delay = 0.01
+
+
+def run_tick(event, x, y, flags, params):
+    if event == 0:      # 0 = mouse movement
+        do_tick = True
+        tick = time()
+        points.append((x, y))
+        img = np.zeros(shape, dtype=np.uint8)
+        draw_bezier(img, points, step=(2 ** -4), radius_start=8, radius_end=4, max_points=32)
+
+        cv2.imshow('aj', img)
 
 
 def click_event(event, x, y, flags, params):
-    if event == cv2.EVENT_LBUTTONDOWN or True:
-        points.append((x, y))
-        img = np.zeros(shape, dtype=np.uint8)
-        draw_bezier(img, points, step=(2**-5), radius_start=8, max_points=16)
-
-        cv2.imshow('aj', img)
+    global do_tick
+    global tick
+    if (time() - tick) > tick_delay:
+        do_tick = True
+        run_tick(event, x, y, flags, params)
     else:
-        print(event)
+        while (time() - tick) < tick_delay:
+            pass
+        if do_tick:
+            do_tick = False
+            run_tick(event, x, y, flags, params)
 
 
 if __name__ == '__main__':
