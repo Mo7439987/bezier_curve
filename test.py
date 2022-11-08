@@ -124,5 +124,5 @@ def bezier(t, _points):
 
 
 if __name__ == '__main__':
-    a = Affichage(max_points=8, step=(2**-8), tick_rate=8)
+    a = Affichage(window_name='omagus')
 
