@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from random import random, randint
 from time import time, sleep
-from math import sin, cos, sqrt, log, factorial
+from math import sin, cos, sqrt, log, comb
 from colorsys import hsv_to_rgb
 
 
@@ -33,7 +33,7 @@ def bezier(t, _points):
     result = vector_scale(_points[0], 0)
     for i in range(n):
         p = _points[i]
-        v = vector_scale(p, binomial(n - 1, i) *
+        v = vector_scale(p, comb(n - 1, i) *
                          (t ** i) *
                          ((1 - t) ** ((n - 1) - i))
                          )
@@ -65,7 +65,6 @@ def draw_bezier(_img, _points: list, step=(2 ** -8), radius_start=1, radius_end=
             #hue = (t + 0.25) % 1
             #hue = (x + y * w) / area
             hue = (hue + sqrt((x - x_prev) ** 2 + (y - y_prev) ** 2) / 512) % 1
-            print(hue)
             c = float_to_int(hsv_to_rgb(hue, 0.8, 0.8)) + (128,)
             cv2.circle(_img, (x, y), r, c, thickness=-1)
 
@@ -77,7 +76,7 @@ points = []
 shape = (1024, 1024, 4)
 tick = time()
 do_tick = True
-tick_delay = 0.01
+tick_delay = (1/64)
 
 
 def run_tick(event, x, y, flags, params):
