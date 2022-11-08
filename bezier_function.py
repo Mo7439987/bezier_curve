@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from random import random, randint
-from time import time
+from time import time, sleep
 from math import sin, cos, sqrt, log, factorial
 from colorsys import hsv_to_rgb
 
@@ -46,22 +46,30 @@ def draw_bezier(_img, _points: list, step=(2 ** -8), radius_start=1, radius_end=
     t = 0
     h, w, c = _img.shape
     area = h * w
+    diagonal = sqrt(h ** 2 + w ** 2)
 
     n = len(_points)
     while n > max_points >= 3:
         n = len(_points)
         _points.pop(0)
 
+    hue = 0
+    x_prev, y_prev = _points[0] if(len(_points) > 0) else (0, 0)
+
     while t <= 1:
         v = bezier(t, _points)
-        if len(v) >= 2:
+        r = max(0, int(radius_start * log(1 + t) + radius_end * log(2 - t)))
+        if (len(v) >= 2) and (r > 0):
             x = int(v[0])
             y = int(v[1])
-
-            c = float_to_int(hsv_to_rgb((t + 0.25) % 1, 0.8, 0.8)) + (128,)
-            #c = float_to_int(hsv_to_rgb((x + y * w) / area, 0.8, 0.8)) + (128,)
-            r = int(radius_start * log(1 + t) + radius_end * log(2 - t))
+            #hue = (t + 0.25) % 1
+            #hue = (x + y * w) / area
+            hue = (hue + sqrt((x - x_prev) ** 2 + (y - y_prev) ** 2) / 512) % 1
+            print(hue)
+            c = float_to_int(hsv_to_rgb(hue, 0.8, 0.8)) + (128,)
             cv2.circle(_img, (x, y), r, c, thickness=-1)
+
+            x_prev, y_prev = x, y
         t += (step / sqrt(n))
 
 
@@ -74,11 +82,9 @@ tick_delay = 0.01
 
 def run_tick(event, x, y, flags, params):
     if event == 0:      # 0 = mouse movement
-        do_tick = True
-        tick = time()
         points.append((x, y))
         img = np.zeros(shape, dtype=np.uint8)
-        draw_bezier(img, points, step=(2 ** -4), radius_start=8, radius_end=4, max_points=32)
+        draw_bezier(img, points, step=(2 ** -4), radius_start=8, radius_end=4, max_points=16)
 
         cv2.imshow('aj', img)
 
@@ -90,9 +96,9 @@ def click_event(event, x, y, flags, params):
         do_tick = True
         run_tick(event, x, y, flags, params)
     else:
-        while (time() - tick) < tick_delay:
-            pass
         if do_tick:
+            while (time() - tick) < tick_delay:
+                pass
             do_tick = False
             run_tick(event, x, y, flags, params)
 
