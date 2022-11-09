@@ -8,7 +8,7 @@ from colorsys import hsv_to_rgb
 
 class Affichage:
     def __init__(self, shape=(1024, 1024, 4), tick_rate=64, max_points=16, step: float = (2**-4),
-                 radius_start=8, radius_end=8, hue_offset=0, window_name='aj'):
+                 radius_start=8, radius_end=8, hue_offset=0, window_name='aj', show_control=False):
         self.shape = shape      # shape of the render, third value is colour depth
         self.tick_rate = tick_rate
         self.max_points = max_points
@@ -17,6 +17,7 @@ class Affichage:
         self.radius_end = radius_end
         self.hue_offset = hue_offset
         self.window_name = window_name
+        self.show_control = show_control
 
         self.points = []
         self.img: np.ndarray = np.zeros(shape, dtype=np.uint8)
@@ -68,7 +69,7 @@ class Affichage:
             hue = 0         # hue for the HSV to RGB color conversion, may change later, may be unused
             t = 0
             while t <= 1:
-                v = bezier(t, self.points)      # un point sur la courbe obtenu avec self.points
+                v = bezier(t, self.points)      # un point sur la courbe obtenu avec (self.points)
                 r = max(0, int(self.radius_start * log(1 + t) + self.radius_end * log(2 - t)))
                 # r est le rayon du cercle qui sera mis sur l'image
                 if (len(v) >= 2) and (r > 0):
@@ -84,6 +85,9 @@ class Affichage:
 
                     x_prev, y_prev = x, y
                 t += (self.step / sqrt(n))
+            if self.show_control:
+                for p in self.points:
+                    cv2.circle(self.img, p, 4, (255, 255, 255, 255), thickness=2)
 
     def tick_and_render(self, event, x, y, flags, params):
         self.run_one_tick(event, x, y, flags, params)
@@ -124,5 +128,9 @@ def bezier(t, _points):
 
 
 if __name__ == '__main__':
-    a = Affichage(window_name='omagus')
+    a = Affichage(window_name='omagus', max_points=16, radius_start=16, show_control=True)
+
+
+# TODO (je ne le ferais jamais) trouver un meilleur nom pour le fichier et la classe,
+#  en fait il en faut aussi un pour le projet
 
