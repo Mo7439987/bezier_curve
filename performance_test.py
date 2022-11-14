@@ -10,7 +10,7 @@ t0 = time()
 
 
 def progress_bar(done, total, length=128, comment=""):
-    bar_char = '\u2501' # TODO use half bar for more precise progress
+    bar_char = '\u2501'
     half_char = '\u257A'
     half_char = '\u2578'
     #half_char = '╺'
