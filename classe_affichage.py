@@ -8,7 +8,8 @@ from colorsys import hsv_to_rgb
 
 class Affichage:
     def __init__(self, shape=(1024, 1024, 4), tick_rate=64, max_points=16, step: float = (2**-4),
-                 radius_start=8, radius_end=8, hue_offset=0, window_name='aj', show_control=False):
+                 radius_start=8, radius_end=8, hue_offset=0, window_name='aj', show_control=False,
+                 color_s=0.8, color_v=0.8, color_a=255):
         self.shape = shape      # shape of the render, third value is colour depth
         self.tick_rate = tick_rate
         self.max_points = max_points
@@ -18,6 +19,7 @@ class Affichage:
         self.hue_offset = hue_offset
         self.window_name = window_name
         self.show_control = show_control
+        self.color_s, self.color_v, self.color_a = color_s, color_v, color_a
 
         self.points = []
         self.img: np.ndarray = np.zeros(shape, dtype=np.uint8)
@@ -25,6 +27,7 @@ class Affichage:
         self.tick_delay = (1.0 / self.tick_rate)
         self.tick = time()
         self.next_tick_ready: bool = True
+        self.next_render_ready = True
 
         self.render_one_frame()
         cv2.imshow(self.window_name, self.img)
@@ -52,9 +55,11 @@ class Affichage:
             self.points.append((x, y))
 
     def render_one_frame(self):
+        self.next_render_ready = False
         self.img.fill(0)        # rempli l'image (np.ndarray) avec des 0
         #self.img = np.zeros_like(self.img)
 
+        print(self.points)
         n = len(self.points)
         if n > 0:
             while n > self.max_points >= 3:
@@ -79,7 +84,7 @@ class Affichage:
                     # hue = (x + y * w) / area
                     # hue = (hue + sqrt((x - x_prev) ** 2 + (y - y_prev) ** 2) / 512) % 1
                     self.hue_offset += self.step / 64
-                    c = float_to_int(hsv_to_rgb(hue + self.hue_offset, 0.8, 0.8)) + (128,)
+                    c = float_to_int(hsv_to_rgb(hue + self.hue_offset, self.color_s, self.color_v)) + (self.color_a,)
                     cv2.circle(self.img, (x, y), r, c, thickness=-1)
                     # thickness=-1 pour un cercle plein, pas un contour
 
@@ -88,11 +93,13 @@ class Affichage:
             if self.show_control:
                 for p in self.points:
                     cv2.circle(self.img, p, 4, (255, 255, 255, 255), thickness=2)
+        self.next_render_ready = True
 
     def tick_and_render(self, event, x, y, flags, params):
         self.run_one_tick(event, x, y, flags, params)
-        self.render_one_frame()
-        cv2.imshow(self.window_name, self.img)
+        if self.next_render_ready:
+            self.render_one_frame()
+            cv2.imshow(self.window_name, self.img)
 
 
 def float_to_int(c):
@@ -116,9 +123,14 @@ def bezier(t, _points):
         return tuple()
 
     result = vector_scale(_points[0], 0)
+
+    comb_int: int = 1
     for i in range(n):
         p = _points[i]
-        v = vector_scale(p, comb(n - 1, i) *
+        if i >= 1:
+            comb_int *= ((n - i) / i)
+        #comb_int = comb(n - 1, i)
+        v = vector_scale(p, comb_int *
                          (t ** i) *
                          ((1 - t) ** ((n - 1) - i))
                          )
@@ -128,7 +140,9 @@ def bezier(t, _points):
 
 
 if __name__ == '__main__':
-    a = Affichage(window_name='omagus', max_points=16, radius_start=16, show_control=True)
+    a = Affichage(window_name='omagus', show_control=False, tick_rate=256,
+                  max_points=24, radius_start=16, radius_end=16,
+                  color_s=1, color_v=1, color_a=255)
 
 
 # TODO (je ne le ferais jamais) trouver un meilleur nom pour le fichier et la classe,
