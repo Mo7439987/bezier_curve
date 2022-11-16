@@ -59,7 +59,7 @@ class Affichage:
         self.img.fill(0)        # rempli l'image (np.ndarray) avec des 0
         #self.img = np.zeros_like(self.img)
 
-        print(self.points)
+
         n = len(self.points)
         if n > 0:
             while n > self.max_points >= 3:
@@ -143,8 +143,3 @@ if __name__ == '__main__':
     a = Affichage(window_name='omagus', show_control=False, tick_rate=256,
                   max_points=24, radius_start=16, radius_end=16,
                   color_s=1, color_v=1, color_a=255)
-
-
-# TODO (je ne le ferais jamais) trouver un meilleur nom pour le fichier et la classe,
-#  en fait il en faut aussi un pour le projet
-
