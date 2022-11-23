@@ -4,5 +4,7 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="jdk" jdkName="Python 3.10 (venv_0)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="tower_defense" />
+    <orderEntry type="module" module-name="tetriste" />
   </component>
 </module>

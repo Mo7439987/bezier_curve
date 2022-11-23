@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/bezier_curve.iml" filepath="$PROJECT_DIR$/.idea/bezier_curve.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tetriste/.idea/tetriste.iml" filepath="$PROJECT_DIR$/../tetriste/.idea/tetriste.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../tower_defense/.idea/tower_defense.iml" filepath="$PROJECT_DIR$/../tower_defense/.idea/tower_defense.iml" />
     </modules>
   </component>
 </project>
