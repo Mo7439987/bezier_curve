@@ -3,8 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/bezier_curve.iml" filepath="$PROJECT_DIR$/.idea/bezier_curve.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../download_flags/.idea/download_flags.iml" filepath="$PROJECT_DIR$/../download_flags/.idea/download_flags.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../gravity_stuff/.idea/gravity_stuff.iml" filepath="$PROJECT_DIR$/../gravity_stuff/.idea/gravity_stuff.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../paletteChanger/.idea/paletteChanger.iml" filepath="$PROJECT_DIR$/../paletteChanger/.idea/paletteChanger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../powdertoy_clone/.idea/powdertoy_clone.iml" filepath="$PROJECT_DIR$/../powdertoy_clone/.idea/powdertoy_clone.iml" />
       <module fileurl="file://$PROJECT_DIR$/../tetriste/.idea/tetriste.iml" filepath="$PROJECT_DIR$/../tetriste/.idea/tetriste.iml" />
       <module fileurl="file://$PROJECT_DIR$/../tower_defense/.idea/tower_defense.iml" filepath="$PROJECT_DIR$/../tower_defense/.idea/tower_defense.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../ulam_spiral/.idea/ulam_spiral.iml" filepath="$PROJECT_DIR$/../ulam_spiral/.idea/ulam_spiral.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../videoRatioFuni/.idea/videoRatioFuni.iml" filepath="$PROJECT_DIR$/../videoRatioFuni/.idea/videoRatioFuni.iml" />
     </modules>
   </component>
 </project>

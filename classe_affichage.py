@@ -7,10 +7,10 @@ from colorsys import hsv_to_rgb
 
 
 class Affichage:
-    def __init__(self, shape=(1024, 1024, 4), tick_rate=64, max_points=16, step: float = (2**-4),
+    def __init__(self, shape=(1024, 1024, 4), tick_rate=64, max_points=16, step: float = (2 ** -4),
                  radius_start=8, radius_end=8, hue_offset=0, window_name='aj', show_control=False,
                  color_s=0.8, color_v=0.8, color_a=255):
-        self.shape = shape      # shape of the render, third value is colour depth
+        self.shape = shape  # shape of the render, third value is colour depth
         self.tick_rate = tick_rate
         self.max_points = max_points
         self.step = step
@@ -39,26 +39,25 @@ class Affichage:
         cv2.waitKey(0)
 
     def callback_method(self, event, x, y, flags, params):
-        if (time() - self.tick) > self.tick_delay:      # if enough time has passed since last tick
+        if (time() - self.tick) > self.tick_delay:  # if enough time has passed since last tick
             self.tick = time()
             self.next_tick_ready = True
             self.tick_and_render(event, x, y, flags, params)
         else:
-            if self.next_tick_ready:                    # if the next tick in queue is ready
-                self.next_tick_ready = False            # stop waiting for the next tick in queue
+            if self.next_tick_ready:  # if the next tick in queue is ready
+                self.next_tick_ready = False  # stop waiting for the next tick in queue
                 while (time() - self.tick) < self.tick_delay:
                     pass
                 self.tick_and_render(event, x, y, flags, params)
 
     def run_one_tick(self, event, x, y, flags, params):
-        if event == 0:      # 0 = mouse movement
+        if event == 0:  # 0 = mouse movement
             self.points.append((x, y))
 
     def render_one_frame(self):
         self.next_render_ready = False
-        self.img.fill(0)        # rempli l'image (np.ndarray) avec des 0
-        #self.img = np.zeros_like(self.img)
-
+        self.img.fill(0)  # rempli l'image (np.ndarray) avec des 0
+        # self.img = np.zeros_like(self.img)
 
         n = len(self.points)
         if n > 0:
@@ -68,13 +67,13 @@ class Affichage:
                 self.points.pop(0)
 
             h, w, c = self.shape
-            area = h * w                        # area of self.img
-            diagonal = sqrt(h ** 2 + w ** 2)    # length of the self.img 's diagonals (Pythagoras' theorem)
-            x_prev, y_prev = self.points[0]     # initial value of "previous value" for x and y
-            hue = 0         # hue for the HSV to RGB color conversion, may change later, may be unused
+            area = h * w  # area of self.img
+            diagonal = sqrt(h ** 2 + w ** 2)  # length of the self.img 's diagonals (Pythagoras' theorem)
+            x_prev, y_prev = self.points[0]  # initial value of "previous value" for x and y
+            hue = 0  # hue for the HSV to RGB color conversion, may change later, may be unused
             t = 0
             while t <= 1:
-                v = bezier(t, self.points)      # un point sur la courbe obtenu avec (self.points)
+                v = bezier(t, self.points)  # un point sur la courbe obtenu avec (self.points)
                 r = max(0, int(self.radius_start * log(1 + t) + self.radius_end * log(2 - t)))
                 # r est le rayon du cercle qui sera mis sur l'image
                 if (len(v) >= 2) and (r > 0):
@@ -129,7 +128,7 @@ def bezier(t, _points):
         p = _points[i]
         if i >= 1:
             comb_int *= ((n - i) / i)
-        #comb_int = comb(n - 1, i)
+        # comb_int = comb(n - 1, i)
         v = vector_scale(p, comb_int *
                          (t ** i) *
                          ((1 - t) ** ((n - 1) - i))
@@ -143,3 +142,4 @@ if __name__ == '__main__':
     a = Affichage(window_name='omagus', show_control=False, tick_rate=256,
                   max_points=24, radius_start=16, radius_end=16,
                   color_s=1, color_v=1, color_a=255)
+
