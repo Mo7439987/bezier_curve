@@ -7,7 +7,7 @@ import cv2
 if __name__ == '__main__':
     a = Affichage(window_name='omagus', show_control=False, tick_rate=256,
                   max_points=24, radius_start=16, radius_end=16,
-                  color_s=1, color_v=1, color_a=255)
+                  color_s=1, color_v=1, color_a=255, step=(2 ** -6))
 
     x: float
     y: float
@@ -28,3 +28,4 @@ if __name__ == '__main__':
         #a.callback_method(None, x, y, None, None)
         cv2.waitKey(1)
 
+p

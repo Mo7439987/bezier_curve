@@ -2,12 +2,20 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../algo_de_prim/.idea/algo_de_prim.iml" filepath="$PROJECT_DIR$/../algo_de_prim/.idea/algo_de_prim.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/bezier_curve.iml" filepath="$PROJECT_DIR$/.idea/bezier_curve.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../_PROJETS/python/single_use/braille_matrix/.idea/braille_matrix.iml" filepath="$PROJECT_DIR$/../../_PROJETS/python/single_use/braille_matrix/.idea/braille_matrix.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../_PROJETS/python/single_use/convert_coordinates/.idea/convert_coordinates.iml" filepath="$PROJECT_DIR$/../../_PROJETS/python/single_use/convert_coordinates/.idea/convert_coordinates.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../_PROJETS/python/single_use/decomposition_premiers/.idea/decomposition_premiers.iml" filepath="$PROJECT_DIR$/../../_PROJETS/python/single_use/decomposition_premiers/.idea/decomposition_premiers.iml" />
       <module fileurl="file://$PROJECT_DIR$/../download_flags/.idea/download_flags.iml" filepath="$PROJECT_DIR$/../download_flags/.idea/download_flags.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../_PROJETS/python/single_use/extraction/.idea/extraction.iml" filepath="$PROJECT_DIR$/../../_PROJETS/python/single_use/extraction/.idea/extraction.iml" />
       <module fileurl="file://$PROJECT_DIR$/../gravity_stuff/.idea/gravity_stuff.iml" filepath="$PROJECT_DIR$/../gravity_stuff/.idea/gravity_stuff.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../l3_log/.idea/l3_log.iml" filepath="$PROJECT_DIR$/../l3_log/.idea/l3_log.iml" />
       <module fileurl="file://$PROJECT_DIR$/../paletteChanger/.idea/paletteChanger.iml" filepath="$PROJECT_DIR$/../paletteChanger/.idea/paletteChanger.iml" />
       <module fileurl="file://$PROJECT_DIR$/../powdertoy_clone/.idea/powdertoy_clone.iml" filepath="$PROJECT_DIR$/../powdertoy_clone/.idea/powdertoy_clone.iml" />
       <module fileurl="file://$PROJECT_DIR$/../tetriste/.idea/tetriste.iml" filepath="$PROJECT_DIR$/../tetriste/.idea/tetriste.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../text_drawing/.idea/text_drawing.iml" filepath="$PROJECT_DIR$/../text_drawing/.idea/text_drawing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../_PROJETS/python/single_use/tiny_llama_test/.idea/tiny_llama_test.iml" filepath="$PROJECT_DIR$/../../_PROJETS/python/single_use/tiny_llama_test/.idea/tiny_llama_test.iml" />
       <module fileurl="file://$PROJECT_DIR$/../tower_defense/.idea/tower_defense.iml" filepath="$PROJECT_DIR$/../tower_defense/.idea/tower_defense.iml" />
       <module fileurl="file://$PROJECT_DIR$/../ulam_spiral/.idea/ulam_spiral.iml" filepath="$PROJECT_DIR$/../ulam_spiral/.idea/ulam_spiral.iml" />
       <module fileurl="file://$PROJECT_DIR$/../videoRatioFuni/.idea/videoRatioFuni.iml" filepath="$PROJECT_DIR$/../videoRatioFuni/.idea/videoRatioFuni.iml" />

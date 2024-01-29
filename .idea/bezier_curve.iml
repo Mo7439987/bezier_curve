@@ -12,5 +12,13 @@
     <orderEntry type="module" module-name="download_flags" />
     <orderEntry type="module" module-name="videoRatioFuni" />
     <orderEntry type="module" module-name="powdertoy_clone" />
+    <orderEntry type="module" module-name="l3_log" />
+    <orderEntry type="module" module-name="algo_de_prim" />
+    <orderEntry type="module" module-name="text_drawing" />
+    <orderEntry type="module" module-name="convert_coordinates" />
+    <orderEntry type="module" module-name="extraction" />
+    <orderEntry type="module" module-name="decomposition_premiers" />
+    <orderEntry type="module" module-name="braille_matrix" />
+    <orderEntry type="module" module-name="tiny_llama_test" />
   </component>
 </module>
